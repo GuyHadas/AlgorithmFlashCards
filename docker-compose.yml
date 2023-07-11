@@ -3,7 +3,6 @@ version: '3.5'
 services:
   db:
     image: postgres
-    restart: always
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=guy
@@ -16,16 +15,32 @@ services:
 
   app:
     build:
-      context: .
+      context: api
       dockerfile: Dockerfile
     environment:
       - PORT=${PORT}
     ports:
-      - '3000:3000'
+      - '8000:3000'
     depends_on:
       - db
     volumes:
-      - ./src:/app/src
+      - ./api/src:/app/src
+  
+  frontend:
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+      PUBLIC_URL: http://localhost:3000
+      FLASHCARD_API_HOST: http://localhost:8000
+
 volumes:
   algo-pgdata:
     external: true
