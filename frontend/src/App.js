@@ -2,24 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const codeString = '(num) => num + 1';
+  const teststring = `Test this line <code>i</code> and keep going <code>${codeString}</code>.`;
+  return <div dangerouslySetInnerHTML={{ __html: teststring }} />;
 }
 
 export default App;
