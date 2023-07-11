@@ -5,10 +5,12 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=guy
+      - POSTGRES_DB=algo-flash-cards
     container_name: database
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - algo-pgdata:/var/lib/postgresql/data
     ports:
       - '5432:5432'
 
@@ -24,15 +26,6 @@ services:
       - db
     volumes:
       - ./src:/app/src
-
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    container_name: nest-pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=guyhadas195@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
-    ports:
-      - '5050:80'
-    depends_on:
-      - db
+volumes:
+  algo-pgdata:
+    external: true
